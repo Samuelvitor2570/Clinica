@@ -4,45 +4,45 @@ O Clinical + é um sistema web completo e intuitivo, desenvolvido para otimizar 
 🔧 Funcionalidades principais:
 Login Seguro e Controle de Acesso:
 
-Sistema de login com autenticação diferenciada para médicos e administradores.
+- Sistema de login com autenticação diferenciada para médicos e administradores.
 
-Redirecionamento automático para páginas exclusivas conforme o perfil do usuário.
+- Redirecionamento automático para páginas exclusivas conforme o perfil do usuário.
 
-Cadastro e Gerenciamento de Médicos:
+- Cadastro e Gerenciamento de Médicos:
 
-Área restrita ao administrador para registrar médicos com nome, usuário e senha.
+- Área restrita ao administrador para registrar médicos com nome, usuário e senha.
 
-Visualização e edição de dados de médicos com controle de pacientes atendidos por dia.
+- Visualização e edição de dados de médicos com controle de pacientes atendidos por dia.
 
-Cadastro de Pacientes e Agendamento de Consultas:
+- Cadastro de Pacientes e Agendamento de Consultas:
 
-Formulário completo para incluir dados pessoais, sintomas, data da consulta, plano de saúde e médico responsável.
+- Formulário completo para incluir dados pessoais, sintomas, data da consulta, plano de saúde e médico responsável.
 
-Validação da capacidade diária de atendimento por médico, limitando a 6 pacientes por dia.
+- Validação da capacidade diária de atendimento por médico, limitando a 6 pacientes por dia.
 
-Listagem de Pacientes por Médico:
+- Listagem de Pacientes por Médico:
 
-Área exclusiva para médicos visualizarem seus pacientes agendados com opção de busca pelo nome.
+- Área exclusiva para médicos visualizarem seus pacientes agendados com opção de busca pelo nome.
 
-Prontuário Médico Digital:
+- Prontuário Médico Digital:
 
-Interface para criação e consulta de prontuários.
+- Interface para criação e consulta de prontuários.
 
-Ferramenta de busca por CIDs (Classificação Internacional de Doenças).
+- Ferramenta de busca por CIDs (Classificação Internacional de Doenças).
 
-Geração de atestados médicos e de comparecimento com envio automático à recepção.
+- Geração de atestados médicos e de comparecimento com envio automático à recepção.
 
-Comunicação em Tempo Real (Chat):
+- Comunicação em Tempo Real (Chat):
 
-Canal de mensagens entre médicos e recepção, promovendo integração entre setores.
+- Canal de mensagens entre médicos e recepção, promovendo integração entre setores.
 
-Painel da Recepção:
+- Painel da Recepção:
 
-Acesso a todos os atestados emitidos, com opção de edição, assinatura digital e impressão.
+- Acesso a todos os atestados emitidos, com opção de edição, assinatura digital e impressão.
 
-Gestão de Administradores:
+- Gestão de Administradores:
 
-Página com informações de contato dos responsáveis técnicos do sistema.
+- Página com informações de contato dos responsáveis técnicos do sistema.
 
 🎯 Objetivo do Sistema:
 O Clinical + foi idealizado para facilitar a rotina hospitalar, centralizando informações clínicas e administrativas, melhorando a comunicação entre setores e oferecendo um atendimento mais ágil e humanizado ao paciente.
