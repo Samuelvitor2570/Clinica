@@ -46,5 +46,3 @@ Login Seguro e Controle de Acesso:
 
 🎯 Objetivo do Sistema:
 O Clinical + foi idealizado para facilitar a rotina hospitalar, centralizando informações clínicas e administrativas, melhorando a comunicação entre setores e oferecendo um atendimento mais ágil e humanizado ao paciente.
-
-Se quiser, posso criar também um texto de apresentação mais informal, uma landing page, ou até um pitch para investidores! Só dizer como você quer usar essa descrição.
