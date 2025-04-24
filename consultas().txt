@@ -1,0 +1,21 @@
+def consultas():
+    mensagem = ""
+    if request.method == "POST":
+        nome = request.form["nome"]
+        idade = request.form["idade"]
+        medico = request.form["medico"]
+        data = request.form["data"]
+
+        if validar_agendamento(medico, data):
+            agenda[(medico, data)].append({"nome": nome, "idade": idade})
+            mensagem = f"Consulta agendada com {medico} para o dia {data}."
+        else:
+            mensagem = f"Erro: {medico} já tem 6 pacientes agendados para o dia {data}."
+
+    return render_template_string(form_html, mensagem=mensagem)
+
+def validar_agendamento(medico, data):
+    return len(agenda[(medico, data)]) < 6
+
+if __name__ == "__main__":
+    app.run(debug=True)
