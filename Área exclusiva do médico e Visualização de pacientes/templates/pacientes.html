@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pacientes do Médico</title>
+</head>
+<body>
+    <h1>Pacientes</h1>
+    <form method="get">
+        <input type="text" name="busca" placeholder="Buscar por nome" value="{{ busca }}">
+        <button type="submit">Buscar</button>
+    </form>
+    <ul>
+        {% for paciente in pacientes %}
+        <li>
+            {{ paciente.nome }} -
+            <a href="{{ url_for('prontuario', paciente_id=paciente.id) }}">Ver prontuário</a>
+        </li>
+        {% else %}
+        <li>Nenhum paciente encontrado.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
