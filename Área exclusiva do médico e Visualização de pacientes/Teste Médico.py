@@ -1,7 +1,7 @@
-# 1. Instalar Flask se necessário
+
 !pip install flask
 
-# 2. Criar o app Flask e o template
+
 import os
 
 os.makedirs("templates", exist_ok=True)
