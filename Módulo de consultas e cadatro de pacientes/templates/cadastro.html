@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clínica + Cadastro de Paciente</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #e6f3fa;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+        <h1 class="text-3xl font-bold text-center text-blue-600 mb-6">Clínica + - Cadastro</h1>
+        
+        <!-- Mensagens Flash -->
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
+        {% if mensagens %}
+        <div class="{% if mensagens[0][0] == 'success' %}bg-green-100 border-l-4 border-green-500 text-green-700{% else %}bg-red-100 border-l-4 border-red-500 text-red-700{% endif %} p-4 mb-4">
+            <ul>
+                {% for categoria, mensagem in mensagens %}
+                <li>{{ mensagem }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        {% endwith %}
+        
+        <!-- Formulário de Cadastro -->
+        <form method="POST">
+            <h2 class="text-xl font-semibold text-blue-600 mb-4">Cadastro de Paciente</h2>
+            <div class="mb-4">
+                <label class="block text-gray-700">Nome</label>
+                <input type="text" name="nome" class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">Email</label>
+                <input type="email" name="email" class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">Telefone</label>
+                <input type="text" name="telefone" class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+            </div>
+            <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Cadastrar</button>
+        </form>
+    </div>
+</body>
+</html>
