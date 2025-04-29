@@ -2,7 +2,7 @@ from fastapi.testclient import TestClient
 from main import app, Base, engine
 import os
 
-# Cria o banco do zero para testar
+# Cria o banco do zero para testar o banco de dados relacional do sistema aplicado.
 if os.path.exists("users.db"):
     os.remove("users.db")
 
