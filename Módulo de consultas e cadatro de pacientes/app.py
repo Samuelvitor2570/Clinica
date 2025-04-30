@@ -10,7 +10,7 @@ pacientes = []
 agendamentos = []
 
 # Médicos disponíveis
-MEDICOS = ['Dr. Ana Silva', 'Dr. Carlos Mendes', 'Dr. Beatriz Lima']
+MEDICOS = ['Dra. Ana Silva', 'Dra. Beatriz Lima', 'Dr. Carlos Mendes']
 
 # Horários permitidos
 HORARIOS_PERMITIDOS = ['08:00', '09:00', '10:00', '13:00', '14:00', '16:00']
@@ -61,9 +61,9 @@ def cadastro():
             flash('Formulário incompleto. Preencha todos os campos.', 'error')
             return render_template('cadastro.html')
         
-        nome = request.form['nome']
-        email = request.form['email']
-        telefone = request.form['telefone']
+        nome = request.form['nome'].strip()
+        email = request.form['email'].strip()
+        telefone = request.form['telefone'].strip()
         
         erros = []
         if not nome:
@@ -75,7 +75,7 @@ def cadastro():
         if not telefone:
             erros.append('Telefone é obrigatório.')
         elif not validar_telefone(telefone):
-            erros.append('Telefone deve ter pelo menos 9 dígitos.')
+            erros.append('Telefone deve ser numérico e ter 9 dígitos.')
             
         if erros:
             for erro in erros:
@@ -85,13 +85,16 @@ def cadastro():
         paciente = {'nome': nome, 'email': email, 'telefone': telefone}
         pacientes.append(paciente)
         flash('Cadastro realizado com sucesso! Agora você pode agendar sua consulta.', 'success')
-        return redirect(url_for('agendamento', email=email))
+        return redirect(url_for('agendamento', email=email, nome=nome, telefone=telefone))
     
     return render_template('cadastro.html')
 
 @app.route('/agendamento', methods=['GET', 'POST'])
 def agendamento():
     email = request.args.get('email')
+    nome = request.args.get('nome')
+    telefone = request.args.get('telefone')
+    
     if not email or not paciente_cadastrado(email):
         flash('Você precisa se cadastrar antes de agendar.', 'error')
         return redirect(url_for('cadastro'))
@@ -100,14 +103,14 @@ def agendamento():
         # Verifica se os campos existem no formulário
         if not all(key in request.form for key in ['nome', 'email', 'telefone', 'medico', 'data', 'horario']):
             flash('Formulário de agendamento incompleto. Preencha todos os campos.', 'error')
-            return render_template('agendamento.html', medicos=MEDICOS, agendamentos=agendamentos, email=email, horarios=HORARIOS_PERMITIDOS)
+            return render_template('agendamento.html', medicos=MEDICOS, email=email, nome=nome, telefone=telefone, horarios=HORARIOS_PERMITIDOS)
         
-        nome = request.form['nome']
-        email = request.form['email']
-        telefone = request.form['telefone']
-        medico = request.form['medico']
-        data = request.form['data']
-        horario = request.form['horario']
+        nome = request.form['nome'].strip()
+        email = request.form['email'].strip()
+        telefone = request.form['telefone'].strip()
+        medico = request.form['medico'].strip()
+        data = request.form['data'].strip()
+        horario = request.form['horario'].strip()
         
         erros = []
         if not medico:
@@ -128,7 +131,7 @@ def agendamento():
         if erros:
             for erro in erros:
                 flash(erro, 'error')
-            return render_template('agendamento.html', medicos=MEDICOS, agendamentos=agendamentos, email=email, horarios=HORARIOS_PERMITIDOS)
+            return render_template('agendamento.html', medicos=MEDICOS, email=email, nome=nome, telefone=telefone, horarios=HORARIOS_PERMITIDOS)
             
         agendamento = {
             'nome': nome,
@@ -140,9 +143,15 @@ def agendamento():
         }
         agendamentos.append(agendamento)
         flash('Agendamento realizado com sucesso!', 'success')
-        return render_template('agendamento.html', medicos=MEDICOS, agendamentos=agendamentos, email=email, horarios=HORARIOS_PERMITIDOS)
+        return render_template('agendamento.html', medicos=MEDICOS, email=email, nome=nome, telefone=telefone, horarios=HORARIOS_PERMITIDOS)
     
-    return render_template('agendamento.html', medicos=MEDICOS, agendamentos=agendamentos, email=email, horarios=HORARIOS_PERMITIDOS)
+    return render_template('agendamento.html', medicos=MEDICOS, email=email, nome=nome, telefone=telefone, horarios=HORARIOS_PERMITIDOS)
+
+@app.route('/agendamentos_cadastrados', methods=['GET'])
+def agendamentos_cadastrados():
+    medico_selecionado = request.args.get('medico', '')
+    agendamentos_filtrados = [appt for appt in agendamentos if appt['medico'] == medico_selecionado] if medico_selecionado else []
+    return render_template('agendamentos_cadastrados.html', medicos=MEDICOS, agendamentos=agendamentos_filtrados, medico_selecionado=medico_selecionado)
 
 if __name__ == '__main__':
     app.run(debug=True)
