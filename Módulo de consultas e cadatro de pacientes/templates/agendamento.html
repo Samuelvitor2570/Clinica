@@ -12,8 +12,8 @@
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-4">
-    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl">
-        <h1 class="text-3xl font-bold text-center text-blue-600 mb-6">Clínica + - Agendamento</h1>
+    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+        <h1 class="text-3xl font-bold text-center text-blue-600 mb-6">Clínica + Agendamento</h1>
         
         <!-- Mensagens Flash -->
         {% with mensagens = get_flashed_messages(with_categories=true) %}
@@ -33,7 +33,7 @@
             <h2 class="text-xl font-semibold text-blue-600 mb-4">Agendar Consulta</h2>
             <div class="mb-4">
                 <label class="block text-gray-700">Nome</label>
-                <input type="text" name="nome" class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <input type="text" name="nome" value="{{ nome }}" class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" readonly>
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700">Email</label>
@@ -41,7 +41,7 @@
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700">Telefone</label>
-                <input type="text" name="telefone" class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <input type="text" name="telefone" value="{{ telefone }}" class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" readonly>
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700">Médico</label>
@@ -68,26 +68,8 @@
             <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Agendar</button>
         </form>
         
-        <!-- Exibição de Agendamentos -->
-        <div class="mt-8">
-            <h2 class="text-xl font-semibold text-blue-600 mb-4">Agendamentos</h2>
-            {% for medico in medicos %}
-            <div class="mb-6">
-                <h3 class="text-lg font-medium text-blue-500">{{ medico }}</h3>
-                {% for agendamento in agendamentos if agendamento.medico == medico %}
-                <div class="bg-blue-50 p-4 rounded mb-2">
-                    <p><strong>Nome:</strong> {{ agendamento.nome }}</p>
-                    <p><strong>Email:</strong> {{ agendamento.email }}</p>
-                    <p><strong>Telefone:</strong> {{ agendamento.telefone }}</p>
-                    <p><strong>Data:</strong> {{ agendamento.data }}</p>
-                    <p><strong>Horário:</strong> {{ agendamento.horario }}</p>
-                </div>
-                {% else %}
-                <p class="text-gray-600">Nenhum agendamento para este médico.</p>
-                {% endfor %}
-            </div>
-            {% endfor %}
-        </div>
+        <!-- Botão para Ver Agendamentos Cadastrados -->
+        <a href="{{ url_for('agendamentos_cadastrados') }}" class="w-full bg-gray-500 text-white p-2 rounded hover:bg-gray-600 mt-4 block text-center">Ver Agendamentos Cadastrados</a>
     </div>
 </body>
 </html>
