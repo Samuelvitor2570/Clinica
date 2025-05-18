@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área Exclusiva do Médico</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='medico_pacientes.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Área Exclusiva - Médico</h1>
+    </header>
+
+    <div class="conteudo">
+        <h2>Selecione o Médico</h2>
+        <form method="GET">
+            <select name="medico" onchange="this.form.submit()">
+                {% for medico_option in medico_list %}
+                    <option value="{{ medico_option }}" {% if medico_option == medico %}selected{% endif %}>{{ medico_option }}</option>
+                {% endfor %}
+            </select>
+        </form>
+
+        <h2>Pacientes de {{ medico }}</h2>  <!-- Título atualizado automaticamente -->
+
+        <form method="POST">
+            <label for="nome">Buscar Paciente:</label>
+            <input type="text" id="nome" name="nome" placeholder="Digite o nome do paciente" value="{{ paciente_nome }}">
+            <button type="submit">Buscar</button>
+        </form>
+
+        {% if pacientes %}
+            <h3>Lista de Pacientes:</h3>
+            <table>
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                    <th>Data</th>
+                    <th>Hora</th>
+                </tr>
+                {% for paciente in pacientes %}
+                <tr>
+                    <td>{{ paciente['nome'] }}</td>
+                    <td>{{ paciente['email'] }}</td>
+                    <td>{{ paciente['telefone'] }}</td>
+                    <td>{{ paciente['data'] }}</td>
+                    <td>{{ paciente['hora'] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>Nenhum paciente encontrado.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
