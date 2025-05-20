@@ -1,38 +1,27 @@
 import unittest
-from recepcao import app
+import recepcao
 
 class TestRecepcao(unittest.TestCase):
 
     def setUp(self):
-        self.client = app.test_client()
-        self.client.post("/chat", json={"autor": "Recepção", "mensagem": "Olá!"})
-        self.client.post("/atestados", json={
-            "paciente": "Carlos",
-            "medico": "Dr. João",
-            "data": "2024-04-25T10:00:00",
-            "tipo": "Consulta",
-            "assinatura": "Dr. João"
-        })
+        recepcao.atestados.clear()
+        recepcao.chat.clear()
 
-    def test_get_atestados(self):
-        response = self.client.get("/atestados")
-        self.assertEqual(response.status_code, 200)
-        self.assertGreaterEqual(len(response.get_json()), 1)
+    def test_adicionar_e_listar_atestado(self):
+        recepcao.adicionar_atestado("Joana", "Dr. João", "2025-05-20 10:00", "Consulta", "Dr. João")
+        self.assertEqual(len(recepcao.atestados), 1)
+        self.assertEqual(recepcao.atestados[0]["paciente"], "Joana")
 
-    def test_update_atestado(self):
-        response = self.client.put("/atestados/0", json={
-            "paciente": "Carlos Atualizado",
-            "medico": "Dr. João",
-            "data": "2024-04-25T10:00:00",
-            "tipo": "Retorno",
-            "assinatura": "Dr. João"
-        })
-        self.assertEqual(response.status_code, 200)
+    def test_editar_atestado(self):
+        recepcao.adicionar_atestado("Carlos", "Dr. João", "2025-05-20 10:00", "Consulta", "Dr. João")
+        recepcao.editar_atestado(0, paciente="Carlos Silva", tipo="Emergência")
+        self.assertEqual(recepcao.atestados[0]["paciente"], "Carlos Silva")
+        self.assertEqual(recepcao.atestados[0]["tipo"], "Emergência")
 
-    def test_get_chat(self):
-        response = self.client.get("/chat")
-        self.assertEqual(response.status_code, 200)
-        self.assertIn("Recepção", response.get_data(as_text=True))
+    def test_enviar_e_listar_chat(self):
+        recepcao.enviar_mensagem("Recepção", "Olá")
+        self.assertEqual(len(recepcao.chat), 1)
+        self.assertEqual(recepcao.chat[0]["mensagem"], "Olá")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
