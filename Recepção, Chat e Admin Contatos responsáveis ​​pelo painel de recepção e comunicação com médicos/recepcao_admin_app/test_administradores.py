@@ -1,15 +1,16 @@
 import unittest
-from administradores import app
+from administradores import listar_administradores, buscar_administrador_por_nome
 
 class TestAdministradores(unittest.TestCase):
+    
+    def test_busca_existente(self):
+        admin = buscar_administrador_por_nome("Ana Paula")
+        self.assertIsNotNone(admin)
+        self.assertEqual(admin["email"], "ana.paula@hospital.com")
+    
+    def test_busca_inexistente(self):
+        admin = buscar_administrador_por_nome("Fulano")
+        self.assertIsNone(admin)
 
-    def setUp(self):
-        self.client = app.test_client()
-
-    def test_get_administradores(self):
-        response = self.client.get("/administradores")
-        self.assertEqual(response.status_code, 200)
-        self.assertIn("João Carlos", response.get_data(as_text=True))
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
