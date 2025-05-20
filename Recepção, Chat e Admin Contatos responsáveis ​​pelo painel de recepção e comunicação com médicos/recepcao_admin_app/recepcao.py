@@ -1,43 +1,79 @@
-from flask import Flask, jsonify, request
 from datetime import datetime
 
-app = Flask(__name__)
+# Lista de médicos disponíveis
+medicos = [
+    {"nome": "Dr. João"},
+    {"nome": "Dra. Maria"},
+]
 
+# Lista de atestados
 atestados = []
+
+# Lista de mensagens do chat
 chat = []
-medicos = [{"nome": "Dr. João"}, {"nome": "Dra. Maria"}]
 
-@app.route("/atestados", methods=["GET"])
-def get_atestados():
-    return jsonify(atestados)
+# --- Atestados ---
 
-@app.route("/atestados", methods=["POST"])
-def add_atestado():
-    data = request.get_json()
-    atestados.append(data)
-    return jsonify({"message": "Atestado adicionado com sucesso"}), 201
+def adicionar_atestado(paciente, medico, data, tipo, assinatura):
+    atestado = {
+        "paciente": paciente,
+        "medico": medico,
+        "data": data,
+        "tipo": tipo,
+        "assinatura": assinatura
+    }
+    atestados.append(atestado)
+    print("✔️ Atestado adicionado com sucesso.")
 
-@app.route("/atestados/<int:index>", methods=["PUT"])
-def update_atestado(index):
-    if index >= len(atestados):
-        return jsonify({"error": "Índice inválido"}), 404
-    data = request.get_json()
-    atestados[index] = data
-    return jsonify({"message": "Atestado atualizado com sucesso"})
+def listar_atestados():
+    for i, a in enumerate(atestados):
+        print(f"\nAtestado #{i}")
+        print(f"Paciente: {a['paciente']}")
+        print(f"Médico: {a['medico']}")
+        print(f"Data: {a['data']}")
+        print(f"Tipo: {a['tipo']}")
+        print(f"Assinatura: {a['assinatura']}")
+        print("-" * 40)
 
-@app.route("/chat", methods=["GET"])
-def get_chat():
-    return jsonify(chat)
+def editar_atestado(index, paciente=None, medico=None, data=None, tipo=None, assinatura=None):
+    if 0 <= index < len(atestados):
+        if paciente: atestados[index]["paciente"] = paciente
+        if medico: atestados[index]["medico"] = medico
+        if data: atestados[index]["data"] = data
+        if tipo: atestados[index]["tipo"] = tipo
+        if assinatura: atestados[index]["assinatura"] = assinatura
+        print("✔️ Atestado atualizado com sucesso.")
+    else:
+        print("❌ Índice de atestado inválido.")
 
-@app.route("/chat", methods=["POST"])
-def post_chat():
-    data = request.get_json()
-    chat.append(data)
-    return jsonify({"message": "Mensagem enviada"}), 201
+# --- Chat ---
 
-@app.route("/medicos", methods=["GET"])
-def get_medicos():
-    return jsonify(medicos)
+def enviar_mensagem(autor, mensagem):
+    chat.append({"autor": autor, "mensagem": mensagem})
+    print(f"✔️ Mensagem enviada por {autor}.")
 
+def listar_chat():
+    print("\n=== Histórico do Chat ===")
+    for msg in chat:
+        print(f"{msg['autor']}: {msg['mensagem']}")
+    print("-" * 40)
+
+# --- Médicos ---
+
+def listar_medicos():
+    print("\n=== Médicos Cadastrados ===")
+    for m in medicos:
+        print(f"- {m['nome']}")
+    print("-" * 40)
+
+# Testes manuais
 if __name__ == "__main__":
-    app.run(debug=True)
+    listar_medicos()
+    enviar_mensagem("Recepção", "Bom dia, equipe!")
+    enviar_mensagem("Médico", "Bom dia! Algum paciente chegou?")
+    listar_chat()
+
+    adicionar_atestado("Carlos", "Dr. João", "2025-05-20 10:00", "Consulta", "Dr. João")
+    listar_atestados()
+    editar_atestado(0, paciente="Carlos Silva", tipo="Retorno")
+    listar_atestados()
