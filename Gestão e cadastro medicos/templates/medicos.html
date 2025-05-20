@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head><title>Médicos</title></head>
+<body>
+    <h1>Cadastro de Médicos</h1>
+    <form method="POST">
+        <input name="nome" placeholder="Nome" required>
+        <input name="especialidade" placeholder="Especialidade" required>
+        <input name="email" placeholder="Email" required>
+        <button>Cadastrar</button>
+    </form>
+    <h2>Médicos Cadastrados</h2>
+    <table border="1">
+        <tr><th>Nome</th><th>Especialidade</th><th>Email</th><th>Ações</th></tr>
+        {% for m in medicos %}
+        <tr>
+            <td>{{ m[1] }}</td>
+            <td>{{ m[2] }}</td>
+            <td>{{ m[3] }}</td>
+            <td>
+                <a href="/admin/medicos/editar/{{ m[0] }}">Editar</a>
+                <a href="/admin/medicos/excluir/{{ m[0] }}">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <a href="/logout">Sair</a>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #f4f6f8;
+            padding: 40px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            transition: border-color 0.2s ease;
+        }
+        
+        input:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        
+        button {
+            padding: 10px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        button:hover {
+            background: #2980b9;
+        }
+        
+        a.button-link {
+            padding: 6px 12px;
+            text-decoration: none;
+            background-color: #e67e22;
+            color: white;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        a.button-link:hover {
+            background-color: #d35400;
+        }
+        
+        .logout-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #c0392b;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .logout-link:hover {
+            text-decoration: underline;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        td a {
+            margin-right: 10px;
+            font-size: 0.9em;
+        }
+        
+        /* Botão Editar */
+a {
+    background-color: #27ae60;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+    font-size: 0.9em;
+}
+
+    </style>
+</body>
+</html>
